@@ -26,23 +26,20 @@ void setup()
 
 void loop()
 {
-  while (true)
+  //  Check soil moisture level from the analog pin value
+  SoilMoistureLevel = analogRead(SoilMoistureReadPin);
+
+  // If soil moisutre below certain level turn on LED
+  if (SoilMoistureLevel < 0.5)  // TODO: Find better threshold
   {
-    //  Check soil moisture level from the analog pin value
-    SoilMoistureLevel = analogRead(SoilMoistureReadPin);
-
-    // If soil moisutre below certain level turn on LED
-    if (SoilMoistureLevel < 0.5)  // TODO: Find better threshold
-    {
-      digitalWrite(WaterMeLedPin,HIGH);
-    } else  // Else turn off LED
-    {
-      digitalWrite(WaterMeLedPin,LOW);
-    }
-
-    // Wake up in one hour
-    esp_light_sleep_start();
-
-    //TODO: Add an external interrupt to wake when moisture reaches certain level (e.g been watered)
+    digitalWrite(WaterMeLedPin,HIGH);
+  } else  // Else turn off LED
+  {
+    digitalWrite(WaterMeLedPin,LOW);
   }
+
+  // Wake up in one hour
+  esp_light_sleep_start();
+
+  //TODO: Add an external interrupt to wake when moisture reaches certain level (e.g been watered)
 }
